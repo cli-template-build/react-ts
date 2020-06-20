@@ -6,9 +6,10 @@ const getPublicUrlOrPath = require('react-dev-utils/getPublicUrlOrPath');
 // process.cwd() 返回的是执行脚本的地址
 const appDirectory = fs.realpathSync(process.cwd());
 
-// 处理地址拼接
+// 与当前执行命令的路径凭借，处理地址拼接
 const resolveApp = relativePath => path.resolve(appDirectory, relativePath);
 
+// 这个是react调试的一个路径，没有太多的为什么， 照这样写就对了
 const publicUrlOrPath = getPublicUrlOrPath(
   process.env.NODE_ENV === 'development',
   require(resolveApp('package.json')).homepage,
@@ -29,10 +30,11 @@ const moduleFileExtensions = [
   'jsx',
 ];
 
+// 返回符合限制条件的文件地址
 const resolveModule = (resolveFn, filePath) => {
   const extension = moduleFileExtensions.find(extension => fs.existsSync(resolveFn(`${filePath}.${extension}`)));
   if (extension)
-    return resolveFn(`${resolveFn}.${extension}`);
+    return resolveFn(`${filePath}.${extension}`);
   return resolveFn(`${filePath}.js`);
 };
 
