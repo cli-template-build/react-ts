@@ -8,11 +8,8 @@ const validateKeyAndCerts = params => {
   const { cert, key, keyFile, crtFile } = params;
   let encrypted;
   try {
-    /*
-      crypto.publicEncrypt(key, buffer)
-      加密， 返回一个加密的结果
-    * */
-    // 加密
+    // 加密公匙
+    // Nodejs crypto模块公钥加密私钥解密探索(https://blog.csdn.net/qq_24078843/article/details/80776769)
     encrypted = crypto.publicEncrypt(cert, Buffer.from('test'));
   } catch (err) {
     throw new Error(
@@ -20,7 +17,7 @@ const validateKeyAndCerts = params => {
     );
   }
   try {
-    // 解密
+    // 私钥解密
     crypto.privateDecrypt(key, encrypted);
   } catch (err) {
     throw new Error(
