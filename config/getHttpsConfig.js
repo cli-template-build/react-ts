@@ -58,3 +58,5 @@ const getHttpsConfig = () => {
   }
   return isHttps;
 };
+
+module.exports = getHttpsConfig;
